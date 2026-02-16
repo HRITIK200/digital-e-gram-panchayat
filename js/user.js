@@ -86,36 +86,38 @@ window.applyService = async function(serviceId, serviceName) {
     }
 
     try {
-
-        // 🔎 Get user full data from Firestore
-        const userDocRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userDocRef);
-
-        if (!userSnap.exists()) {
-            alert("User profile not found!");
-            return;
-        }
-
-        const userData = userSnap.data();
-
-        // 🚨 CHECK IF ALREADY APPLIED
-        const q = query(
-            collection(db, "applications"),
-            where("userId", "==", user.uid),
-            where("serviceId", "==", serviceId)
+        // 🔹 Get user full name from Firestore
+        const userSnapshot = await getDocs(
+            query(collection(db, "users"), where("uid", "==", user.uid))
         );
 
-        const existing = await getDocs(q);
+        let fullName = user.email; // fallback
 
-        if (!existing.empty) {
-            alert("⚠ You have already applied for this service!");
+        userSnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.fullName) {
+                fullName = data.fullName;
+            }
+        });
+
+        // 🔹 Check if already applied
+        const existingQuery = await getDocs(
+            query(
+                collection(db, "applications"),
+                where("userId", "==", user.uid),
+                where("serviceId", "==", serviceId)
+            )
+        );
+
+        if (!existingQuery.empty) {
+            alert("You have already applied for this service!");
             return;
         }
 
-        // ✅ Save new application
+        // 🔹 Save application
         await addDoc(collection(db, "applications"), {
             userId: user.uid,
-            userName: userData.fullName,   // ✅ FULL NAME now
+            userName: fullName,
             serviceId: serviceId,
             serviceName: serviceName,
             status: "Pending",
@@ -131,7 +133,6 @@ window.applyService = async function(serviceId, serviceName) {
         alert(error.message);
     }
 };
-
 
 
 // ==============================
