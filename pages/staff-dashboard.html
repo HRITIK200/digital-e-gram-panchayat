@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <div class="staff-profile-card">
+            <div class="staff-avatar">S</div>
+            <div class="staff-details">
+                <h4>Staff Member</h4>
+                <span>Verification Officer</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+    <li onclick="scrollToSection('pendingSection')">
+        Pending Applications
+    </li>
+    <li onclick="scrollToSection('approvedSection')">
+        Approved Applications
+    </li>
+    <li onclick="scrollToSection('rejectedSection')">
+        Rejected Applications
+    </li>
+    </ul>
+
+    </div>
+
+    <!-- Main Area -->
+    <div class="admin-main">
+
+        <!-- Topbar -->
+        <div class="admin-topbar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+            <div class="welcome-text">
+                Staff Dashboard
+            </div>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+
+        <!-- Content -->
+        <div class="admin-content">
+
+            <!-- Pending -->
+            <div class="card" id="pendingSection">
+                <h3>Pending Applications</h3>
+                <div id="pendingList" class="applications-grid"></div>
+            </div>
+
+            <!-- Approved -->
+            <div class="card" id="approvedSection">
+                <h3>Approved Applications</h3>
+                <div id="approvedList" class="applications-grid"></div>
+            </div>
+
+            <!-- Rejected -->
+            <div class="card" id="rejectedSection">
+                <h3>Rejected Applications</h3>
+                <div id="rejectedList" class="applications-grid"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="module" src="../js/staff.js"></script>
+<script type="module" src="../js/main.js"></script>
+
+</body>
+</html>

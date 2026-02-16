@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <h2 class="logo">E-Gram</h2>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li>Create Service</li>
+            <li>All Services</li>
+        </ul>
+    </div>
+
+    <!-- Main Area -->
+    <div class="admin-main">
+
+        <!-- Topbar -->
+        <div class="admin-topbar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="welcome-text">
+                Admin Dashboard
+            </div>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+
+        <!-- Content -->
+        <div class="admin-content">
+
+            <div class="card create-service-grid">
+
+    <!-- LEFT SIDE (Form) -->
+    <div class="create-left">
+        <h3>Create Service</h3>
+
+        <form id="serviceForm">
+            <div class="form-group">
+                <label>Service Name</label>
+                <input type="text" id="serviceName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Service Description</label>
+                <textarea id="serviceDescription" required></textarea>
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Create Service
+            </button>
+        </form>
+    </div>
+
+    <!-- RIGHT SIDE (Information Box) -->
+    <div class="create-right">
+        <h4>Service Management</h4>
+        <p>
+            Here you can create new services that citizens
+            can apply for online.
+        </p>
+
+        <ul>
+            <li>✔ Online Application</li>
+            <li>✔ Status Tracking</li>
+            <li>✔ Role-Based Approval</li>
+        </ul>
+    </div>
+
+</div>
+
+
+            <div class="card">
+                <h3>All Services</h3>
+                <div id="servicesList" class="services-grid"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script type="module" src="../js/admin.js"></script>
+<script type="module" src="../js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <div class="staff-profile-card">
+           <div class="staff-avatar" id="userAvatar">U</div>
+           <div class="staff-details">
+             <h4 id="userFullName">Loading...</h4>
+             <span id="userRole">Citizen</span>
+         </div>
+        </div>
+
+
+        <ul>
+            <li class="active">Services</li>
+            <li>My Applications</li>
+        </ul>
+    </div>
+
+    <!-- Main -->
+    <div class="admin-main">
+
+        <div class="admin-topbar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+            <div class="welcome-text">User Dashboard</div>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+
+        <div class="admin-content">
+
+            <!-- Available Services -->
+            <div class="card">
+                <h3>Available Services</h3>
+                <div id="servicesList" class="services-grid"></div>
+            </div>
+
+            <!-- My Applications -->
+            <div class="card">
+                <h3>My Applications</h3>
+                <div id="applicationsList" class="applications-grid"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="module" src="../js/user.js"></script>
+<script type="module" src="../js/main.js"></script>
+
+</body>
+</html>
