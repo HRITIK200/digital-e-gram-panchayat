@@ -1,75 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Staff Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Staff Verification Desk | Digital E-Gram Panchayat</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
+
+<!-- National Tricolor Bar -->
+<div class="gov-tricolor-bar"></div>
 
 <div class="admin-layout">
 
     <!-- Sidebar -->
-    <div class="admin-sidebar">
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="sidebar-brand-box">
+            <div class="logo-crest">🏛️</div>
+            <div class="sidebar-brand-text">
+                <h4 data-i18n="portalTitle">E-Gram Desk</h4>
+                <span data-i18n="officerDeskTitle">Verification Officer</span>
+            </div>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">&times;</button>
+        </div>
+
         <div class="staff-profile-card">
-            <div class="staff-avatar">S</div>
+            <div class="staff-avatar" id="staffAvatar">S</div>
             <div class="staff-details">
-                <h4>Staff Member</h4>
-                <span>Verification Officer</span>
+                <h4 id="staffFullName">Loading...</h4>
+                <span id="staffRole">Verification Officer</span>
             </div>
         </div>
 
+        <div class="sidebar-group-label">Application Queue</div>
         <ul class="sidebar-menu">
-    <li onclick="scrollToSection('pendingSection')">
-        Pending Applications
-    </li>
-    <li onclick="scrollToSection('approvedSection')">
-        Approved Applications
-    </li>
-    <li onclick="scrollToSection('rejectedSection')">
-        Rejected Applications
-    </li>
-    </ul>
+            <li id="tabBtnPending" class="active">
+                <span class="nav-icon-wrap"><span class="nav-icon">⏳</span></span>
+                <span style="flex: 1;" data-i18n="kpiPending">Pending Reviews</span>
+                <span class="role-badge role-user" id="badgePending" style="font-size: 11px;">0</span>
+            </li>
+            <li id="tabBtnApproved">
+                <span class="nav-icon-wrap"><span class="nav-icon">✅</span></span>
+                <span style="flex: 1;" data-i18n="kpiApproved">Approved Files</span>
+                <span class="role-badge role-staff" id="badgeApproved" style="font-size: 11px;">0</span>
+            </li>
+            <li id="tabBtnRejected">
+                <span class="nav-icon-wrap"><span class="nav-icon">❌</span></span>
+                <span style="flex: 1;" data-i18n="kpiRejected">Rejected Files</span>
+                <span class="role-badge role-admin" id="badgeRejected" style="font-size: 11px;">0</span>
+            </li>
+            <li id="tabBtnGrievances">
+                <span class="nav-icon-wrap"><span class="nav-icon">⚖️</span></span>
+                <span style="flex: 1;" data-i18n="tabGrievances">Grievances Redressal</span>
+                <span class="role-badge" id="badgeGrievances" style="font-size: 11px; background: rgba(14, 165, 233, 0.2); color: #0284c7;">0</span>
+            </li>
+        </ul>
 
-    </div>
+        <div class="admin-sidebar-footer">
+            <span>Desk ID: EGP-SEC-01</span>
+            <span>Gram Panchayat Cell</span>
+        </div>
+    </aside>
 
-    <!-- Main Area -->
-    <div class="admin-main">
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Workspace -->
+    <main class="admin-main">
 
         <!-- Topbar -->
-        <div class="admin-topbar">
-            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-
-            <div class="welcome-text">
-                Staff Dashboard
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" id="sidebarToggle" aria-label="Toggle Navigation">☰</button>
+                <div class="breadcrumb-box">
+                    <span>Officer Desk</span>
+                    <span class="separator">/</span>
+                    <span class="active" id="breadcrumbStaff">Pending Applications Queue</span>
+                </div>
             </div>
-            <button id="logoutBtn" class="logout-btn">Logout</button>
-        </div>
 
-        <!-- Content -->
+            <div class="topbar-right-actions">
+                <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+                <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">🌙</button>
+                <button id="logoutBtn" class="logout-btn">
+                    <span data-i18n="navLogout">Logout</span>
+                    <span>➔</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
         <div class="admin-content">
 
-            <!-- Pending -->
-            <div class="card" id="pendingSection">
-                <h3>Pending Applications</h3>
-                <div id="pendingList" class="applications-grid"></div>
+            <!-- Officer KPI Metrics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--warning);">⏳</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="kpiPendingCount">0</div>
+                        <div class="stat-label" data-i18n="kpiPending">Pending Verification</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--success);">✔</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="kpiApprovedCount">0</div>
+                        <div class="stat-label" data-i18n="kpiApproved">Approved & Issued</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(239, 68, 68, 0.12); color: var(--danger);">✕</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="kpiRejectedCount">0</div>
+                        <div class="stat-label" data-i18n="kpiRejected">Rejected / Discrepancy</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Approved -->
-            <div class="card" id="approvedSection">
-                <h3>Approved Applications</h3>
-                <div id="approvedList" class="applications-grid"></div>
+            <!-- Search Bar Wrapper -->
+            <div class="search-bar-wrapper">
+                <input type="text" id="staffSearchInput" class="search-input" placeholder="🔍 Search applications by applicant name or service name...">
+                <button id="exportAppsBtn" class="export-btn" data-i18n="btnExportCsv">📊 Export Applications CSV</button>
             </div>
 
-            <!-- Rejected -->
-            <div class="card" id="rejectedSection">
-                <h3>Rejected Applications</h3>
-                <div id="rejectedList" class="applications-grid"></div>
-            </div>
+            <!-- Pending Section -->
+            <section id="tabPending" class="tab-content active">
+                <div class="card" id="pendingSection">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Pending Applications Queue</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Inspect applicant attached proof, verify credentials, and attest status</p>
+                        </div>
+                    </div>
+                    <div id="pendingList" class="applications-grid"></div>
+                </div>
+            </section>
+
+            <!-- Approved Section -->
+            <section id="tabApproved" class="tab-content">
+                <div class="card" id="approvedSection">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Approved & Issued Applications</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Official electronic certificates generated and made available to citizens</p>
+                        </div>
+                    </div>
+                    <div id="approvedList" class="applications-grid"></div>
+                </div>
+            </section>
+
+            <!-- Rejected Section -->
+            <section id="tabRejected" class="tab-content">
+                <div class="card" id="rejectedSection">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Rejected Applications</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Files marked with official discrepancy feedback statements</p>
+                        </div>
+                    </div>
+                    <div id="rejectedList" class="applications-grid"></div>
+                </div>
+            </section>
+
+            <!-- Grievances Resolution Desk -->
+            <section id="tabGrievances" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Citizen Grievance Resolution Desk</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Address and resolve village complaints with formal statements</p>
+                        </div>
+                    </div>
+                    <div id="staffGrievanceList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
 
         </div>
-    </div>
+    </main>
 
 </div>
 

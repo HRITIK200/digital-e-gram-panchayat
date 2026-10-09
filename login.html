@@ -1,44 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login - Digital E Gram Panchayat</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Citizen & Officer Login | Digital E-Gram Panchayat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
 
-    <div class="header">
-        <h1>Digital E Gram Panchayat</h1>
-        <p>Government Service Portal</p>
-    </div>
+<!-- Tricolor Bar -->
+<div class="gov-tricolor-bar"></div>
 
-    <div class="login-container">
-        <div class="login-card">
-            <h2>Login to Your Account</h2>
+<div class="auth-page-container">
+    <div class="auth-split-card">
+        <!-- Left Brand Presentation Side -->
+        <div class="auth-brand-side">
+            <div class="auth-brand-logo">
+                <div class="logo-crest">🏛️</div>
+                <div>
+                    <h3 style="color:white; font-size:18px;" data-i18n="portalTitle">E-Gram Panchayat</h3>
+                    <span style="font-size:11px; color:#cbd5e1;" data-i18n="portalSubtitle">Rural e-Governance Initiative</span>
+                </div>
+            </div>
+
+            <div class="auth-brand-content">
+                <h2>Welcome to Digital Governance</h2>
+                <p>One unified portal for village citizens, verification officers, and administrators.</p>
+
+                <ul class="auth-brand-perks">
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Apply & track certificates with real-time status</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>DigiLocker-compatible signed official documents</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Role-based access with 256-bit secure authentication</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Transparent village audit trails & notifications</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="auth-brand-footer">
+                <a href="index.html">← Back to Portal Home</a>
+                <span>Helpline: 1800-180-1555</span>
+            </div>
+        </div>
+
+        <!-- Right Form Panel Side -->
+        <div class="auth-form-side">
+            <div class="auth-top-toolbar">
+                <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+                <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">🌙</button>
+            </div>
+
+            <div class="auth-form-header">
+                <h3 data-i18n="loginHeaderTitle">Sign in to Portal</h3>
+                <p data-i18n="loginHeaderSubtitle">Enter your credentials or use 1-click demo login below</p>
+            </div>
+
+            <!-- 1-Click Fast Demo Accounts Panel -->
+            <div class="demo-accounts-panel">
+                <div class="demo-accounts-header">
+                    <h4 data-i18n="demoTitle">⚡ 1-Click Fast Demo Login</h4>
+                    <span style="font-size: 11px; color: var(--text-muted);">No typing required</span>
+                </div>
+                <div class="demo-grid">
+                    <div class="demo-card-item" id="demoCitizenCard" title="1-Click Login as Citizen">
+                        <span class="demo-badge user">Citizen</span>
+                        <span class="demo-name">Ramesh Kumar</span>
+                        <span class="demo-email">citizen@egram.gov.in</span>
+                        <button type="button" class="demo-btn-fill" onclick="fillDemoLogin('citizen@egram.gov.in', 'citizen123')">Login as Citizen</button>
+                    </div>
+
+                    <div class="demo-card-item" id="demoStaffCard" title="1-Click Login as Staff Officer">
+                        <span class="demo-badge staff">Staff</span>
+                        <span class="demo-name">Sunita Sharma</span>
+                        <span class="demo-email">staff@egram.gov.in</span>
+                        <button type="button" class="demo-btn-fill" onclick="fillDemoLogin('staff@egram.gov.in', 'staff123')">Login as Staff</button>
+                    </div>
+
+                    <div class="demo-card-item" id="demoAdminCard" title="1-Click Login as Administrator">
+                        <span class="demo-badge admin">Admin</span>
+                        <span class="demo-name">Vikram Singh</span>
+                        <span class="demo-email">admin@egram.gov.in</span>
+                        <button type="button" class="demo-btn-fill" onclick="fillDemoLogin('admin@egram.gov.in', 'admin123')">Login as Admin</button>
+                    </div>
+                </div>
+            </div>
 
             <form id="loginForm">
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                <div class="form-group-modern">
+                    <label for="email" data-i18n="labelEmail">Email Address</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="email" placeholder="name@example.com" required autocomplete="email">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="form-group-modern">
+                    <label for="password" data-i18n="labelPassword">Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle-btn" id="togglePasswordBtn" title="Show/Hide Password">👁️</button>
+                    </div>
                 </div>
 
-                <button type="submit" class="primary-btn">Login</button>
+                <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">
+                    <span data-i18n="btnLoginSubmit">Sign In to Dashboard →</span>
+                </button>
             </form>
 
-            <p class="register-text">
-                Don’t have an account?
-                <a href="register.html">Register Here</a>
+            <p class="auth-switch-text">
+                <a href="register.html" data-i18n="linkNoAccount">Don't have an account yet? Register as Citizen</a>
             </p>
         </div>
     </div>
+</div>
 
 <script type="module" src="js/auth.js"></script>
+<script type="module">
+    import { initThemeToggle } from "./js/theme.js";
+    import { initLanguage } from "./js/i18n.js";
+
+    initThemeToggle("themeToggleBtn");
+    initLanguage("langToggleBtn");
+
+    // Password visibility toggle
+    const toggleBtn = document.getElementById("togglePasswordBtn");
+    const passwordInput = document.getElementById("password");
+    if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleBtn.innerText = isPassword ? "🙈" : "👁️";
+        });
+    }
+
+    // Fast 1-Click Demo Fill Function
+    window.fillDemoLogin = function(email, password) {
+        const emailField = document.getElementById("email");
+        const passField = document.getElementById("password");
+        const submitBtn = document.getElementById("loginSubmitBtn");
+        const form = document.getElementById("loginForm");
+
+        if (emailField && passField) {
+            emailField.value = email;
+            passField.value = password;
+
+            // Trigger visual pulse highlight
+            emailField.classList.remove("input-highlight");
+            passField.classList.remove("input-highlight");
+            void emailField.offsetWidth; // trigger reflow
+            emailField.classList.add("input-highlight");
+            passField.classList.add("input-highlight");
+
+            // Auto-submit after 300ms for instant fast login experience
+            setTimeout(() => {
+                if (form) {
+                    form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+                }
+            }, 300);
+        }
+    };
+
+    // Auto-detect ?demo= param from URL
+    const demoParam = new URLSearchParams(window.location.search).get("demo");
+    if (demoParam) {
+        if (demoParam === "citizen") window.fillDemoLogin("citizen@egram.gov.in", "citizen123");
+        else if (demoParam === "staff") window.fillDemoLogin("staff@egram.gov.in", "staff123");
+        else if (demoParam === "admin") window.fillDemoLogin("admin@egram.gov.in", "admin123");
+    }
+</script>
 
 </body>
 </html>

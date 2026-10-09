@@ -3,62 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Digital E-Gram Panchayat</title>
+    <title>Digital E-Gram Panchayat | Ministry of Panchayati Raj Initiative</title>
+    <meta name="description" content="Official Digital E-Gram Panchayat Citizen Services Portal for online certificate applications, tracking, notices, and rural governance.">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
 
-<header class="navbar">
-    <div class="logo">
-        <span class="logo-icon">🏛</span>
-        <span>E-Gram Panchayat</span>
-    </div>
+<!-- National Tricolor Accent Bar -->
+<div class="gov-tricolor-bar"></div>
 
-    <div class="nav-buttons">
-        <a href="login.html">Login</a>
-        <a href="register.html" class="nav-register">Register</a>
+<!-- Government Official Top Bar -->
+<div class="gov-top-announcement">
+    <div class="gov-announcement-left">
+        <span class="gov-badge-official">🇮🇳 GOVT. OF INDIA</span>
+        <div class="gov-announcement-ticker">
+            <span class="highlight">📢 Notice:</span> Instant Aadhaar & DigiLocker linked certificate verification active across all Panchayats.
+        </div>
+    </div>
+    <div class="gov-quick-links">
+        <span>Toll-Free Helpline: <strong>1800-180-1555</strong></span>
+        <span>|</span>
+        <a href="login.html?demo=citizen" style="color: #fde047; font-weight: 700;">🔑 Demo Citizen</a>
+        <span>|</span>
+        <a href="login.html?demo=staff" style="color: #67e8f9; font-weight: 700;">🔑 Demo Staff</a>
+        <span>|</span>
+        <a href="login.html?demo=admin" style="color: #f472b6; font-weight: 700;">🔑 Demo Admin</a>
+        <span>|</span>
+        <a href="#tracker">Track Application</a>
+        <span>|</span>
+        <a href="#notices">Village Notices</a>
+    </div>
+</div>
+
+<!-- Main Sticky Navigation -->
+<header class="navbar">
+    <a href="index.html" class="logo">
+        <div class="logo-crest">🏛️</div>
+        <div class="logo-text-block">
+            <span class="logo-title" data-i18n="portalTitle">E-Gram Panchayat</span>
+            <span class="logo-subtitle" data-i18n="portalSubtitle">Ministry of Panchayati Raj | Digital India</span>
+        </div>
+    </a>
+
+    <ul class="nav-menu">
+        <li><a href="#home" data-i18n="navHome">Home</a></li>
+        <li><a href="#services" data-i18n="navServices">Services</a></li>
+        <li><a href="#tracker">Track Status</a></li>
+        <li><a href="#notices">Notices</a></li>
+        <li><a href="#metrics" data-i18n="navMetrics">Portal Impact</a></li>
+        <li><a href="#workflow" data-i18n="navWorkflow">How It Works</a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <!-- Language Switcher Button -->
+        <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+        <!-- Theme Switcher Button -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Dark/Light Mode">🌙</button>
+        <a href="login.html" class="btn-nav-login" data-i18n="navLogin">Sign In</a>
+        <a href="register.html" class="btn-nav-register">
+            <span data-i18n="navRegister">Register Citizen</span>
+            <span>→</span>
+        </a>
     </div>
 </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Digital Governance for Rural India</h1>
-        <p>
-            Apply for government certificates online, track application
-            status instantly, and experience secure & transparent service delivery.
+<!-- Hero Section -->
+<section class="hero-wrapper" id="home">
+    <div class="hero-mesh"></div>
+    <div class="hero-container">
+        <div class="hero-badge-pill">
+            <span class="pulse"></span>
+            <span data-i18n="heroBadge">Over 250,000+ Gram Panchayats Digitally Connected</span>
+        </div>
+
+        <h1 class="hero-title">
+            <span data-i18n="heroTitleLine1">Digital Governance for Rural India</span> <br>
+            <span class="gradient-text" data-i18n="heroTitleLine2">Transparent, Fast & Paperless</span>
+        </h1>
+
+        <p class="hero-desc" data-i18n="heroDesc">
+            Apply online for official certificates, welfare pensions, and local licenses directly from home. Track real-time progress and download digitally signed, verified certificates.
         </p>
 
-        <div class="hero-buttons">
-            <a href="login.html" class="btn-primary">Get Started</a>
-            <a href="register.html" class="btn-outline">Create Account</a>
+        <!-- Live Service Search Bar -->
+        <div class="hero-search-box">
+            <span class="hero-search-icon">🔍</span>
+            <input type="text" id="heroSearchInput" class="hero-search-input" data-i18n-placeholder="heroSearchPlaceholder" placeholder="Search service: Birth Certificate, Income Proof, Old Age Pension, Domicile...">
+            <button class="hero-search-btn" id="heroSearchBtn" data-i18n="heroSearchBtn">Search Services</button>
+        </div>
+
+        <!-- Quick Filter Chips -->
+        <div class="hero-quick-chips">
+            <span class="label" data-i18n="heroPopular">Popular:</span>
+            <a href="login.html" class="quick-chip">📜 Birth Certificate</a>
+            <a href="login.html" class="quick-chip">💰 Income Certificate</a>
+            <a href="login.html" class="quick-chip">👵 Senior Pension</a>
+            <a href="login.html" class="quick-chip">🏠 Residence Domicile</a>
+            <a href="login.html" class="quick-chip">🌾 Krishi Aid</a>
+        </div>
+
+        <div class="hero-cta-group">
+            <a href="register.html" class="btn-primary-hero">
+                <span data-i18n="heroCtaApply">Apply for Services Now →</span>
+            </a>
+            <a href="#services" class="btn-secondary-hero">
+                <span data-i18n="heroCtaExplore">Explore 15+ Services</span>
+            </a>
+        </div>
+
+        <!-- Fast 1-Click Demo Accounts Strip -->
+        <div class="hero-demo-strip" style="margin-top: 26px; padding: 12px 18px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: var(--radius-lg); display: inline-flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px;">
+            <span style="font-size: 13px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 6px;">
+                <span>🔑</span> Fast 1-Click Demo Access:
+            </span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="login.html?demo=citizen" class="demo-btn-pill" style="background: rgba(37,99,235,0.9); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none;">👤 Citizen Login</a>
+                <a href="login.html?demo=staff" class="demo-btn-pill" style="background: rgba(14,165,233,0.9); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none;">🧑‍💼 Staff Officer Login</a>
+                <a href="login.html?demo=admin" class="demo-btn-pill" style="background: rgba(219,39,119,0.9); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none;">🛡️ System Admin Login</a>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="features">
-    <div class="feature-card">
-        <div class="feature-icon">📄</div>
-        <h3>Online Applications</h3>
-        <p>Submit applications digitally without visiting offices.</p>
-    </div>
+<!-- Quick Application Status Tracker Widget (No login required) -->
+<section class="section-wrapper" id="tracker" style="margin-bottom: 50px;">
+    <div class="tracker-wrapper">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <span class="section-eyebrow">Real-Time Verification</span>
+            <h3 style="font-size: 26px; font-weight: 800; margin-bottom: 8px;" data-i18n="trackerTitle">Quick Application Status Tracker</h3>
+            <p style="font-size: 14.5px; color: var(--text-muted);" data-i18n="trackerDesc">Check the live verification progress of your Panchayat application instantly without logging in.</p>
+        </div>
 
-    <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>Status Tracking</h3>
-        <p>Track your application progress in real-time.</p>
-    </div>
+        <div class="tracker-input-group">
+            <input type="text" id="publicTrackInput" class="tracker-input" data-i18n-placeholder="trackerInputPlaceholder" placeholder="Enter Application Reference ID (e.g. 1, 2, 3...)">
+            <button id="publicTrackBtn" class="tracker-btn" data-i18n="trackerBtn">Track Status</button>
+        </div>
 
-    <div class="feature-card">
-        <div class="feature-icon">🔐</div>
-        <h3>Secure & Role-Based</h3>
-        <p>Separate dashboards for Citizen, Staff & Admin.</p>
+        <div id="trackerResultBox" class="tracker-result-card">
+            <!-- Dynamic Result Populated Here -->
+        </div>
     </div>
 </section>
 
-<footer class="footer">
-    © 2026 Digital E-Gram Panchayat | Government Service Portal
+<!-- Real-time Portal Impact Stats -->
+<section class="stats-section-wrap" id="metrics">
+    <div class="stats-glass-card">
+        <div class="stats-card-header">
+            <div>
+                <h3>Panchayat Portal Impact</h3>
+                <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Real-time synchronized data from local e-Governance database</p>
+            </div>
+            <div class="stats-live-pill">
+                <span style="display:inline-block; width:6px; height:6px; background:var(--success); border-radius:50%;"></span>
+                <span>LIVE SYSTEM DATA</span>
+            </div>
+        </div>
+
+        <div class="stats-grid-container">
+            <div class="stat-metric-card">
+                <div class="stat-metric-icon blue">👥</div>
+                <div class="stat-metric-content">
+                    <span class="stat-metric-number" id="statCitizens">0</span>
+                    <span class="stat-metric-title">Registered Citizens</span>
+                </div>
+            </div>
+
+            <div class="stat-metric-card">
+                <div class="stat-metric-icon green">🏛️</div>
+                <div class="stat-metric-content">
+                    <span class="stat-metric-number" id="statServices">0</span>
+                    <span class="stat-metric-title">Active Panchayat Services</span>
+                </div>
+            </div>
+
+            <div class="stat-metric-card">
+                <div class="stat-metric-icon amber">📝</div>
+                <div class="stat-metric-content">
+                    <span class="stat-metric-number" id="statApplications">0</span>
+                    <span class="stat-metric-title">Applications Submitted</span>
+                </div>
+            </div>
+
+            <div class="stat-metric-card">
+                <div class="stat-metric-icon purple">✔</div>
+                <div class="stat-metric-content">
+                    <span class="stat-metric-number" id="statApproved">0</span>
+                    <span class="stat-metric-title">Certificates Issued</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Live Gram Sabha Notices & Circulars -->
+<section class="section-wrapper" id="notices">
+    <div class="section-head">
+        <span class="section-eyebrow">Public Communications</span>
+        <h2 class="section-title" data-i18n="noticesTitle">Gram Sabha Announcements & Circulars</h2>
+        <p class="section-subtitle" data-i18n="noticesSubtitle">Official village resolutions, meeting notices, and citizen welfare schemes.</p>
+    </div>
+
+    <div class="notices-grid" id="publicNoticesList">
+        <!-- Loaded dynamically from /api/notices -->
+        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">
+            Loading official village circulars...
+        </div>
+    </div>
+</section>
+
+<!-- Featured Citizen Services Showcase -->
+<section class="section-wrapper" id="services">
+    <div class="section-head">
+        <span class="section-eyebrow">Citizen Service Catalog</span>
+        <h2 class="section-title">Government Services at Your Fingertips</h2>
+        <p class="section-subtitle">No more standing in queues at Panchayat Bhavans. Complete official formalities in minutes.</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-box">
+            <div class="feature-box-icon">📜</div>
+            <h4>Official Certificates</h4>
+            <p>Apply for Birth, Death, Caste, and Domicile certificates with instant digitally signed validation under the IT Act.</p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Apply Online ➔</a>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">💰</div>
+            <h4>Income & Revenue Proof</h4>
+            <p>Obtain attested Income Certificates and Land Valuation proofs for school scholarships and government welfare schemes.</p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Apply Online ➔</a>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">👵</div>
+            <h4>Social Welfare & Pensions</h4>
+            <p>Old age pension, widow pension, and disability assistance application submissions directly reviewed by village welfare officers.</p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Apply Online ➔</a>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">🌾</div>
+            <h4>Agricultural Subsidies</h4>
+            <p>Panchayat level fertilizer aids, seed subsidies, and farm equipment hire authorizations for local farmers.</p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Apply Online ➔</a>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">🏠</div>
+            <h4>Rural Housing & Sanitation</h4>
+            <p>PMAY rural housing verification, toilet construction subsidies, and drinking water tap connection requests.</p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Apply Online ➔</a>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-icon">📊</div>
+            <h4>Status Tracking & Audit</h4>
+            <p>End-to-end transparent timeline tracker. Receive feedback directly from the verification officer.</p>
+            <div style="margin-top: 20px;">
+                <a href="#tracker" style="font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">Track Now ➔</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4-Step Application Workflow -->
+<section class="section-wrapper" id="workflow">
+    <div class="section-head">
+        <span class="section-eyebrow">Seamless Process</span>
+        <h2 class="section-title">How It Works for Every Citizen</h2>
+        <p class="section-subtitle">A straightforward 4-step digital journey from application to certificate download.</p>
+    </div>
+
+    <div class="workflow-grid">
+        <div class="workflow-card">
+            <div class="workflow-step-num">1</div>
+            <span class="workflow-icon">📱</span>
+            <h5>1. Create Free Account</h5>
+            <p>Sign up securely with your email and basic details as a Citizen. Set your credentials.</p>
+        </div>
+
+        <div class="workflow-card">
+            <div class="workflow-step-num">2</div>
+            <span class="workflow-icon">📝</span>
+            <h5>2. Select & Apply</h5>
+            <p>Browse through available Panchayat services and submit supporting proof with your purpose.</p>
+        </div>
+
+        <div class="workflow-card">
+            <div class="workflow-step-num">3</div>
+            <span class="workflow-icon">🔍</span>
+            <h5>3. Officer Review</h5>
+            <p>Verification Officer inspects submitted details. View official remarks in real-time timeline.</p>
+        </div>
+
+        <div class="workflow-card">
+            <div class="workflow-step-num">4</div>
+            <span class="workflow-icon">🖨️</span>
+            <h5>4. Instant Certificate</h5>
+            <p>Once approved, generate and print your digitally signed government certificate with QR seal.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Official Footer -->
+<footer class="footer-wrapper">
+    <div class="footer-container">
+        <div class="footer-col footer-brand">
+            <div class="logo" style="display:flex; align-items:center; gap:10px;">
+                <div class="logo-crest">🏛️</div>
+                <div>
+                    <h4 style="color:white; font-size:18px;">E-Gram Panchayat</h4>
+                    <span style="color:#94a3b8; font-size:11px;">Ministry of Panchayati Raj</span>
+                </div>
+            </div>
+            <p>The centralized digital governance initiative empowering village citizens with streamlined, paperless access to civic services and certificates.</p>
+        </div>
+
+        <div class="footer-col">
+            <h5>Citizen Services</h5>
+            <ul>
+                <li><a href="login.html">Birth & Death Certificates</a></li>
+                <li><a href="login.html">Income & Asset Verification</a></li>
+                <li><a href="login.html">Rural Housing Schemes</a></li>
+                <li><a href="login.html">Old Age Pensions</a></li>
+                <li><a href="login.html">Grievance Registration</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h5>Portal Access</h5>
+            <ul>
+                <li><a href="login.html">Citizen Login</a></li>
+                <li><a href="login.html">Verification Officer Portal</a></li>
+                <li><a href="login.html">Administrator Console</a></li>
+                <li><a href="register.html">Create Citizen Account</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h5>Helpdesk & Contact</h5>
+            <ul>
+                <li>📍 Panchayat Bhavan e-Governance Cell</li>
+                <li>📞 Toll-Free Helpline: 1800-180-1555</li>
+                <li>✉️ Support: helpdesk@egram-panchayat.gov.in</li>
+                <li>🕒 Hours: Mon - Sat: 9:30 AM to 6:00 PM</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+        <span>© 2026 Digital E-Gram Panchayat Portal | Government of India. All Rights Reserved.</span>
+        <span>Crafted for Rural Empowerment & Transparent Governance</span>
+    </div>
 </footer>
+
+<script type="module">
+    import { API_URL } from "./js/config.js";
+    import { initThemeToggle } from "./js/theme.js";
+    import { initLanguage } from "./js/i18n.js";
+
+    // Initialize Theme Switcher & Language Switcher
+    initThemeToggle("themeToggleBtn");
+    initLanguage("langToggleBtn");
+
+    // Fetch and display live database statistics
+    async function loadStats() {
+        try {
+            const response = await fetch(`${API_URL}/api/stats`);
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("statCitizens").innerText = data.citizens || 0;
+                document.getElementById("statServices").innerText = data.services || 0;
+                document.getElementById("statApplications").innerText = data.applications || 0;
+                document.getElementById("statApproved").innerText = data.approved || 0;
+            }
+        } catch (err) {
+            console.error("Failed to load statistics:", err);
+        }
+    }
+
+    // Fetch and display public notices
+    async function loadNotices() {
+        const noticesContainer = document.getElementById("publicNoticesList");
+        if (!noticesContainer) return;
+
+        try {
+            const response = await fetch(`${API_URL}/api/notices`);
+            if (response.ok) {
+                const data = await response.json();
+                const notices = data.notices || [];
+
+                if (notices.length === 0) {
+                    noticesContainer.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">
+                            No active circulars at present.
+                        </div>`;
+                    return;
+                }
+
+                noticesContainer.innerHTML = notices.map(n => `
+                    <div class="notice-card ${n.is_urgent ? "urgent" : ""}">
+                        <div class="notice-header-tags">
+                            <span class="notice-category-pill">📌 ${n.category || "General"}</span>
+                            ${n.is_urgent ? `<span class="notice-urgent-badge">🚨 Urgent Notice</span>` : ""}
+                        </div>
+                        <h4>${n.title}</h4>
+                        <p>${n.content}</p>
+                        <div class="notice-footer">
+                            <span>Published: ${new Date(n.created_at).toLocaleDateString()}</span>
+                            <span>Gram Secretariat</span>
+                        </div>
+                    </div>
+                `).join("");
+            }
+        } catch (err) {
+            console.error("Failed to load notices:", err);
+        }
+    }
+
+    // Public Application Status Tracker
+    const trackBtn = document.getElementById("publicTrackBtn");
+    const trackInput = document.getElementById("publicTrackInput");
+    const trackerResultBox = document.getElementById("trackerResultBox");
+
+    async function handleTrack() {
+        const refId = trackInput.value.trim();
+        if (!refId) {
+            alert("Please enter a valid Application Reference ID");
+            return;
+        }
+
+        trackerResultBox.style.display = "block";
+        trackerResultBox.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 10px;">Searching Panchayat database for application #${refId}...</p>`;
+
+        try {
+            const res = await fetch(`${API_URL}/api/applications/track/${refId}`);
+            const data = await res.json();
+
+            if (!res.ok) {
+                trackerResultBox.innerHTML = `
+                    <div style="text-align: center; color: var(--danger); padding: 12px;">
+                        <strong>⚠️ Application Not Found</strong>
+                        <p style="font-size: 13.5px; margin-top: 4px; color: var(--text-muted);">${data.message || "Please verify your application ID."}</p>
+                    </div>`;
+                return;
+            }
+
+            const app = data.application;
+            const formattedDate = new Date(app.created_at).toLocaleString();
+
+            trackerResultBox.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
+                    <div>
+                        <span style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase;">Tracking Reference #${app.id}</span>
+                        <h4 style="font-size: 18px; font-weight: 800; margin-top: 2px;">${app.service_name}</h4>
+                    </div>
+                    <span class="status-badge status-${app.status.toLowerCase()}">${app.status}</span>
+                </div>
+
+                <div style="font-size: 13.5px; line-height: 1.6; color: var(--text-muted);">
+                    <p>Applied Date: <strong style="color: var(--text-main);">${formattedDate}</strong></p>
+                    ${app.details ? `<p style="margin-top: 6px;">Purpose: <span style="color: var(--text-main);">${app.details}</span></p>` : ""}
+                    ${app.feedback ? `<div class="details-box" style="margin-top: 10px;"><strong>Official Remark:</strong> ${app.feedback}</div>` : ""}
+                </div>
+
+                <div style="margin-top: 14px; text-align: right;">
+                    <a href="login.html" class="primary-btn" style="width: auto; padding: 8px 18px; font-size: 13px;">Login for Full File Access →</a>
+                </div>
+            `;
+        } catch (err) {
+            trackerResultBox.innerHTML = `<p style="color: var(--danger); text-align: center;">Failed to connect to tracking server.</p>`;
+        }
+    }
+
+    if (trackBtn && trackInput) {
+        trackBtn.addEventListener("click", handleTrack);
+        trackInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") handleTrack();
+        });
+    }
+
+    loadStats();
+    loadNotices();
+</script>
 
 </body>
 </html>

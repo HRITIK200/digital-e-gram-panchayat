@@ -1,21 +1,35 @@
-import { auth } from "./firebase-config.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { logAction } from "./logger.js";
+import { showToast } from "./ui-helpers.js";
 
 const logoutBtn = document.getElementById("logoutBtn");
 
 if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
-        const user = auth.currentUser;
+        try {
+            const userStr = localStorage.getItem("user");
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                await logAction(user.id, "User Logged Out");
+            }
 
-        await logAction(user.uid, "User Logged Out");
-
-        await signOut(auth);
-        alert("Logged Out Successfully");
-        window.location.href = "../login.html";
+            // Clear authentication details from localStorage
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            
+            showToast("Logged out successfully!", "success");
+            
+            setTimeout(() => {
+                window.location.href = "../login.html";
+            }, 1000);
+        } catch (error) {
+            showToast("Logout failed: " + error.message, "error");
+        }
     });
 }
+
 window.toggleSidebar = function () {
-    document.querySelector(".admin-sidebar")
-        .classList.toggle("active");
+    const sidebar = document.querySelector(".admin-sidebar");
+    if (sidebar) {
+        sidebar.classList.toggle("active");
+    }
 };

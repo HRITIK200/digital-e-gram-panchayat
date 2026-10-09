@@ -1,58 +1,311 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Citizen Dashboard | Digital E-Gram Panchayat Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
+
+<!-- National Tricolor Bar -->
+<div class="gov-tricolor-bar"></div>
 
 <div class="admin-layout">
 
     <!-- Sidebar -->
-    <div class="admin-sidebar">
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="sidebar-brand-box">
+            <div class="logo-crest">🏛️</div>
+            <div class="sidebar-brand-text">
+                <h4 data-i18n="portalTitle">E-Gram Portal</h4>
+                <span>Citizen Services</span>
+            </div>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">&times;</button>
+        </div>
+
         <div class="staff-profile-card">
-           <div class="staff-avatar" id="userAvatar">U</div>
-           <div class="staff-details">
-             <h4 id="userFullName">Loading...</h4>
-             <span id="userRole">Citizen</span>
-         </div>
+            <div class="staff-avatar" id="userAvatar">U</div>
+            <div class="staff-details">
+                <h4 id="userFullName">Loading...</h4>
+                <span id="userRole">Citizen</span>
+            </div>
         </div>
 
-
+        <div class="sidebar-group-label">Citizen Desk</div>
         <ul>
-            <li class="active">Services</li>
-            <li>My Applications</li>
+            <li id="tabBtnServices" class="active">
+                <span class="nav-icon-wrap"><span class="nav-icon">📄</span></span>
+                <span data-i18n="tabAvailableServices">Available Services</span>
+            </li>
+            <li id="tabBtnApplications">
+                <span class="nav-icon-wrap"><span class="nav-icon">📋</span></span>
+                <span data-i18n="tabMyApplications">My Applications</span>
+            </li>
+            <li id="tabBtnNotices">
+                <span class="nav-icon-wrap"><span class="nav-icon">📢</span></span>
+                <span data-i18n="tabNotices">Panchayat Notices</span>
+            </li>
+            <li id="tabBtnGrievances">
+                <span class="nav-icon-wrap"><span class="nav-icon">⚖️</span></span>
+                <span data-i18n="tabGrievances">Grievance Redressal</span>
+            </li>
         </ul>
-    </div>
 
-    <!-- Main -->
-    <div class="admin-main">
+        <div class="sidebar-group-label" style="margin-top: 14px;">Preferences</div>
+        <ul>
+            <li id="tabBtnSettings">
+                <span class="nav-icon-wrap"><span class="nav-icon">⚙️</span></span>
+                <span data-i18n="tabSettings">Profile Settings</span>
+            </li>
+        </ul>
 
-        <div class="admin-topbar">
-            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-
-            <div class="welcome-text">User Dashboard</div>
-            <button id="logoutBtn" class="logout-btn">Logout</button>
+        <div class="admin-sidebar-footer">
+            <span>Panchayat e-Cell</span>
+            <span>Helpline: 1800-180-1555</span>
         </div>
+    </aside>
 
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Workspace -->
+    <main class="admin-main">
+
+        <!-- Topbar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" id="sidebarToggle" aria-label="Toggle Navigation">☰</button>
+                <div class="breadcrumb-box">
+                    <span>Portal</span>
+                    <span class="separator">/</span>
+                    <span class="active" id="breadcrumbCurrent">Available Services</span>
+                </div>
+            </div>
+            
+            <div class="topbar-right-actions">
+                <!-- Notifications Bell -->
+                <div class="notification-bell-container">
+                    <button class="bell-btn" id="bellBtn" title="Alert Notifications">
+                        🔔
+                        <span class="bell-badge" id="bellBadge" style="display: none;">0</span>
+                    </button>
+                    <!-- Notification Tray Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-dropdown-header">
+                            <h4>Alert Notifications</h4>
+                            <button class="clear-notifications-btn" id="clearNotificationsBtn">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="notificationList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Switcher Button -->
+                <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+                
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">🌙</button>
+
+                <!-- Logout Button -->
+                <button id="logoutBtn" class="logout-btn">
+                    <span data-i18n="navLogout">Logout</span>
+                    <span>➔</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Inner Content Area -->
         <div class="admin-content">
 
-            <!-- Available Services -->
-            <div class="card">
-                <h3>Available Services</h3>
-                <div id="servicesList" class="services-grid"></div>
+            <!-- Citizen Greeting Hero Banner -->
+            <div class="citizen-greeting-banner">
+                <div class="citizen-greeting-text">
+                    <h2><span data-i18n="greetingHello">Namaste</span>, <span id="bannerCitizenName">Citizen</span>! 👋</h2>
+                    <p data-i18n="dashboardCitizenSubtitle">Welcome to your Gram Panchayat digital counter. Apply for official certificates, welfare grants, and download verified e-documents.</p>
+                </div>
+                <div class="citizen-quick-metrics">
+                    <div class="citizen-metric-pill">
+                        <span class="val" id="metricActiveApps">0</span>
+                        <span class="lbl">In Review</span>
+                    </div>
+                    <div class="citizen-metric-pill">
+                        <span class="val" id="metricApprovedApps">0</span>
+                        <span class="lbl">Certificates</span>
+                    </div>
+                    <div class="citizen-metric-pill">
+                        <span class="val" id="metricTotalApps">0</span>
+                        <span class="lbl">Total Applied</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- My Applications -->
-            <div class="card">
-                <h3>My Applications</h3>
-                <div id="applicationsList" class="applications-grid"></div>
-            </div>
+            <!-- Tab 1: Available Services -->
+            <section id="tabServices" class="tab-content active">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3 data-i18n="tabAvailableServices">Available Panchayat Services</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Apply online with document proof without visiting Panchayat Bhavan</p>
+                        </div>
+                        <div style="max-width: 300px; width: 100%;">
+                            <input type="text" id="serviceSearchInput" class="search-input" placeholder="🔍 Search service name..." style="padding: 8px 14px; font-size: 13.5px;">
+                        </div>
+                    </div>
+                    
+                    <!-- Category Filter Chips -->
+                    <div class="category-filters" id="categoryFilters">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Services Grid -->
+                    <div id="servicesList" class="services-grid"></div>
+                </div>
+            </section>
+
+            <!-- Tab 2: My Applications -->
+            <section id="tabApplications" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3 data-i18n="tabMyApplications">My Submitted Applications</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Track live progress and view verification officer statements</p>
+                        </div>
+                        <!-- Status Filter Buttons -->
+                        <div class="category-filters" style="margin-bottom: 0;">
+                            <button class="filter-chip active" id="appFilterAll">All Files</button>
+                            <button class="filter-chip" id="appFilterPending">🟡 In Review</button>
+                            <button class="filter-chip" id="appFilterApproved">🟢 Approved</button>
+                            <button class="filter-chip" id="appFilterRejected">🔴 Rejected</button>
+                        </div>
+                    </div>
+
+                    <div id="applicationsList" class="applications-grid"></div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Panchayat Notices -->
+            <section id="tabNotices" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3 data-i18n="noticesTitle">Gram Sabha Announcements & Circulars</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Official notifications from Village Pradhan & Panchayat Secretary</p>
+                        </div>
+                    </div>
+
+                    <div class="notices-grid" id="citizenNoticesList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Grievance Redressal -->
+            <section id="tabGrievances" class="tab-content">
+                <div class="card create-service-grid" style="margin-bottom: 28px;">
+                    <div class="create-left">
+                        <div class="card-header-flex">
+                            <div>
+                                <h3 data-i18n="grievanceTitle">Register a Citizen Grievance</h3>
+                                <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Submit local complaints directly to the Panchayat Secretariat</p>
+                            </div>
+                        </div>
+
+                        <form id="grievanceForm" style="box-shadow: none; padding: 0; background: none;">
+                            <div class="form-group-modern">
+                                <label for="grievanceSubject" data-i18n="grievanceSubject">Grievance Subject</label>
+                                <input type="text" id="grievanceSubject" class="search-input" required placeholder="e.g. Drinking Water Supply Disruption in Ward 3">
+                            </div>
+
+                            <div class="form-group-modern">
+                                <label for="grievanceCategory" data-i18n="grievanceCategory">Issue Category</label>
+                                <select id="grievanceCategory" class="search-input" style="width: 100%; border-radius: var(--radius-sm);" required>
+                                    <option value="Water Supply">💧 Drinking Water & Borewell</option>
+                                    <option value="Sanitation">🧹 Sanitation & Garbage Clearance</option>
+                                    <option value="Roads & Lighting">💡 Village Roads & Street Lighting</option>
+                                    <option value="Certificate Delay">📜 Certificate Processing Delay</option>
+                                    <option value="General">🏛️ General Village Welfare</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <label for="grievanceDescription" data-i18n="grievanceDetails">Detailed Description of the Issue</label>
+                                <textarea id="grievanceDescription" class="search-input" style="min-height: 100px; width: 100%; border-radius: var(--radius-md);" required placeholder="Provide location, street name, and specific complaint details..."></textarea>
+                            </div>
+
+                            <button type="submit" class="auth-submit-btn" style="width: auto; padding: 12px 28px;">
+                                <span data-i18n="btnSubmitGrievance">Submit Grievance →</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="create-right">
+                        <h4>Panchayat Redressal Commitment</h4>
+                        <p>
+                            Every grievance registered through this portal is assigned a tracking token and assigned to the village secretary.
+                        </p>
+                        <ul>
+                            <li>✔ Direct Secretariat Visibility</li>
+                            <li>✔ Guaranteed Response SLA within 7 Days</li>
+                            <li>✔ Officer Resolution Statement on Portal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>My Registered Grievances & Complaints</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Track resolution status from village authorities</p>
+                        </div>
+                    </div>
+
+                    <div id="grievanceList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: Profile Settings -->
+            <section id="tabSettings" class="tab-content">
+                <div class="card" style="max-width: 600px;">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3 data-i18n="tabSettings">Citizen Profile Settings</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Manage your official citizen details</p>
+                        </div>
+                    </div>
+
+                    <form id="profileForm" style="box-shadow: none; padding: 0; background: none;">
+                        <div class="form-group-modern">
+                            <label>Full Official Name</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">👤</span>
+                                <input type="text" id="settingsFullName" required placeholder="Enter your full name">
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label>Registered Email Address</label>
+                            <div class="input-with-icon">
+                                <span class="input-icon">✉️</span>
+                                <input type="email" id="settingsEmail" disabled style="background: var(--bg-card-subtle); cursor: not-allowed; opacity: 0.75;">
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 6px;">Email address cannot be changed once verified.</span>
+                        </div>
+
+                        <button type="submit" class="auth-submit-btn" style="width: auto; padding: 12px 28px; margin-top: 14px;">
+                            <span>Save Profile Changes</span>
+                            <span>✓</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
 
         </div>
-    </div>
+    </main>
 
 </div>
 

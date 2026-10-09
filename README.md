@@ -11,10 +11,10 @@ Digital E-Gram Panchayat is a web-based government service portal that provides:
 - 📝 Online certificate applications
 - 📊 Real-time status tracking
 - 👥 Role-based dashboards (Citizen, Staff, Admin)
-- 🔐 Secure authentication using Firebase
+- 🔐 Secure authentication using Supabase
 - 🗂 Application approval & rejection system
 
-This project demonstrates full-stack development using Firebase Authentication and Firestore Database.
+This project demonstrates full-stack development using Supabase Auth and PostgreSQL Database.
 
 ---
 
@@ -55,18 +55,17 @@ This project demonstrates full-stack development using Firebase Authentication a
 - CSS3 (Custom Professional UI)
 - JavaScript (ES Modules)
 
-### Backend (Firebase)
-- Firebase Authentication
-- Firestore Database
-- Firebase Hosting (optional)
+### Backend (Supabase)
+- Supabase Auth
+- Supabase PostgreSQL Database
 
 ---
 
 ## 🔐 Authentication Flow
 
 - User registers with Full Name, Email & Password
-- Firebase Authentication creates account
-- User role stored in Firestore
+- Supabase Auth creates account
+- User role stored in public users table
 - Role-based redirect:
   - Citizen → User Dashboard
   - Staff → Staff Dashboard
@@ -74,14 +73,14 @@ This project demonstrates full-stack development using Firebase Authentication a
 
 ---
 
-## 🗄 Firestore Database Structure
+## 🗄 Supabase Database Structure
 
-### 🔹 users collection
-users/
-userId
-fullName
-email
-role
+### 🔹 users table
+- `id` (uuid, primary key, references auth.users)
+- `full_name` (text)
+- `email` (text)
+- `role` (text)
+- `created_at` (timestamp)
 
 ### 🔹 services collection
 services/
@@ -114,9 +113,53 @@ createdAt
 
 ---
 
-### Configure Firebase
+### Configure Supabase
 
-Update `firebase-config.js` with your Firebase project credentials.
+Update `js/supabase-config.js` with your Supabase Project URL and Anon key.
+
+---
+
+### Run SQL Schema
+
+Paste and execute the SQL schema details in the Supabase SQL Editor to create the necessary tables:
+
+```sql
+create table public.users (
+  id uuid references auth.users on delete cascade primary key,
+  full_name text not null,
+  email text not null,
+  role text not null default 'user',
+  created_at timestamptz default timezone('utc'::text, now()) not null
+);
+
+create table public.services (
+  id uuid default gen_random_uuid() primary key,
+  service_name text not null,
+  service_description text not null,
+  created_by uuid references public.users(id),
+  created_at timestamptz default timezone('utc'::text, now()) not null
+);
+
+create table public.applications (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references public.users(id) on delete cascade,
+  user_name text not null,
+  service_id uuid references public.services(id) on delete cascade,
+  service_name text not null,
+  status text not null default 'Pending',
+  details text,
+  created_at timestamptz default timezone('utc'::text, now()) not null
+);
+
+create table public.logs (
+  id bigint generated always as identity primary key,
+  user_id uuid,
+  action text not null,
+  timestamp timestamptz default timezone('utc'::text, now()) not null
+);
+
+alter publish dbcontent_publication add table public.services, public.applications, public.logs;
+```
 
 ---
 
@@ -136,11 +179,8 @@ Update `firebase-config.js` with your Firebase project credentials.
 This project demonstrates:
 
 - Role-based access control
-- Firebase Authentication
-- Firestore CRUD operations
-- Real-time UI updates
-- Professional UI/UX design
-- Modular JavaScript structure
+- Supabase Auth and Database
+- Real-time UI updates via Postgres changes channel
 
 ---
 

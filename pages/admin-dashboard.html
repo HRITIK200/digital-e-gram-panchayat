@@ -1,89 +1,383 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>System Administration | Digital E-Gram Panchayat</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
+
+<!-- National Tricolor Bar -->
+<div class="gov-tricolor-bar"></div>
 
 <div class="admin-layout">
 
     <!-- Sidebar -->
-    <div class="admin-sidebar">
-        <h2 class="logo">E-Gram</h2>
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="sidebar-brand-box">
+            <div class="logo-crest">🏛️</div>
+            <div class="sidebar-brand-text">
+                <h4 data-i18n="portalTitle">E-Gram Admin</h4>
+                <span>Central Governance</span>
+            </div>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">&times;</button>
+        </div>
+
+        <div class="staff-profile-card">
+            <div class="staff-avatar" id="adminAvatar">A</div>
+            <div class="staff-details">
+                <h4 id="adminFullName">Admin User</h4>
+                <span id="adminRole">System Admin</span>
+            </div>
+        </div>
+
+        <div class="sidebar-group-label">Core Management</div>
         <ul>
-            <li class="active">Dashboard</li>
-            <li>Create Service</li>
-            <li>All Services</li>
+            <li id="tabBtnCreate" class="active">
+                <span class="nav-icon-wrap"><span class="nav-icon">➕</span></span>
+                <span data-i18n="createServiceTitle">Create Service</span>
+            </li>
+            <li id="tabBtnServices">
+                <span class="nav-icon-wrap"><span class="nav-icon">📁</span></span>
+                <span>All Services</span>
+            </li>
+            <li id="tabBtnNotices">
+                <span class="nav-icon-wrap"><span class="nav-icon">📢</span></span>
+                <span>Village Notices</span>
+            </li>
+            <li id="tabBtnGrievances">
+                <span class="nav-icon-wrap"><span class="nav-icon">⚖️</span></span>
+                <span>Grievance Monitor</span>
+            </li>
         </ul>
-    </div>
+
+        <div class="sidebar-group-label" style="margin-top: 14px;">Administration</div>
+        <ul>
+            <li id="tabBtnUsers">
+                <span class="nav-icon-wrap"><span class="nav-icon">👥</span></span>
+                <span data-i18n="userRolesTitle">User Roles</span>
+            </li>
+            <li id="tabBtnLogs">
+                <span class="nav-icon-wrap"><span class="nav-icon">📜</span></span>
+                <span data-i18n="auditTrailTitle">System Logs</span>
+            </li>
+        </ul>
+
+        <div class="admin-sidebar-footer">
+            <span>Root Admin Access</span>
+            <span>v2.5 Enterprise</span>
+        </div>
+    </aside>
+
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Main Area -->
-    <div class="admin-main">
+    <main class="admin-main">
 
         <!-- Topbar -->
-        <div class="admin-topbar">
-            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="welcome-text">
-                Admin Dashboard
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" id="sidebarToggle" aria-label="Toggle Navigation">☰</button>
+                <div class="breadcrumb-box">
+                    <span>Admin Console</span>
+                    <span class="separator">/</span>
+                    <span class="active" id="breadcrumbAdmin">Service Management</span>
+                </div>
             </div>
-            <button id="logoutBtn" class="logout-btn">Logout</button>
-        </div>
 
-        <!-- Content -->
+            <div class="topbar-right-actions">
+                <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+                <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">🌙</button>
+                <button id="logoutBtn" class="logout-btn">
+                    <span data-i18n="navLogout">Logout</span>
+                    <span>➔</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
         <div class="admin-content">
 
-            <div class="card create-service-grid">
-
-    <!-- LEFT SIDE (Form) -->
-    <div class="create-left">
-        <h3>Create Service</h3>
-
-        <form id="serviceForm">
-            <div class="form-group">
-                <label>Service Name</label>
-                <input type="text" id="serviceName" required>
+            <!-- Analytics Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(37, 99, 235, 0.12); color: var(--accent);">🏛️</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statsServices">0</div>
+                        <div class="stat-label">Services Created</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--success);">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statsCitizens">0</div>
+                        <div class="stat-label">Registered Citizens</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--warning);">📝</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statsApplications">0</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(168, 85, 247, 0.12); color: #9333ea;">✔</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statsApproved">0</div>
+                        <div class="stat-label">Approved Certificates</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Service Description</label>
-                <textarea id="serviceDescription" required></textarea>
+            <!-- Visual Analytics Charts Row -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h4>Application Status Breakdown</h4>
+                        <p>Distribution across Pending, Approved, and Rejected files</p>
+                    </div>
+                    <div class="svg-chart-wrapper" id="statusChartWrapper">
+                        <!-- Rendered by SVG -->
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h4>Panchayat Domain Activity</h4>
+                        <p>Applications, Citizen Accounts, and Grievance records</p>
+                    </div>
+                    <div class="svg-chart-wrapper" id="activityBarChartWrapper">
+                        <!-- Rendered by SVG -->
+                    </div>
+                </div>
             </div>
 
-            <button type="submit" class="primary-btn">
-                Create Service
-            </button>
-        </form>
-    </div>
+            <!-- Tab 1: Create Service -->
+            <section id="tabCreate" class="tab-content active">
+                <div class="card create-service-grid">
 
-    <!-- RIGHT SIDE (Information Box) -->
-    <div class="create-right">
-        <h4>Service Management</h4>
-        <p>
-            Here you can create new services that citizens
-            can apply for online.
-        </p>
+                    <div class="create-left">
+                        <div class="card-header-flex">
+                            <div>
+                                <h3>Publish New Panchayat Service</h3>
+                                <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Configure service catalog available to village citizens</p>
+                            </div>
+                        </div>
 
-        <ul>
-            <li>✔ Online Application</li>
-            <li>✔ Status Tracking</li>
-            <li>✔ Role-Based Approval</li>
-        </ul>
-    </div>
+                        <form id="serviceForm" style="box-shadow: none; padding: 0; background: none;">
+                            <div class="form-group-modern">
+                                <label for="serviceName">Service Name / Title</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">📝</span>
+                                    <input type="text" id="serviceName" required placeholder="e.g. Domicile & Residence Certificate">
+                                </div>
+                            </div>
 
-</div>
+                            <div class="form-group-modern">
+                                <label for="serviceDescription">Service Description & Requirements</label>
+                                <textarea id="serviceDescription" class="search-input" style="min-height: 120px; width: 100%; border-radius: var(--radius-md);" required placeholder="Specify eligibility guidelines, expected turnaround time, and supporting documents required..."></textarea>
+                            </div>
 
+                            <button type="submit" class="auth-submit-btn" style="width: auto; padding: 12px 28px;">
+                                <span>Publish Service to Portal</span>
+                                <span>→</span>
+                            </button>
+                        </form>
+                    </div>
 
-            <div class="card">
-                <h3>All Services</h3>
-                <div id="servicesList" class="services-grid"></div>
-            </div>
+                    <div class="create-right">
+                        <h4>Service Management Guidelines</h4>
+                        <p>
+                            Published services become immediately visible on the Citizen portal and can be applied for by registered villagers.
+                        </p>
+
+                        <ul>
+                            <li>✔ Direct Online Submission</li>
+                            <li>✔ Real-Time Status Tracking for Citizens</li>
+                            <li>✔ Officer Review & Digital Attestation</li>
+                            <li>✔ Instant PDF e-Certificate with QR Code</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Tab 2: All Services -->
+            <section id="tabServices" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Active Panchayat Services</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Manage catalog entries and remove outdated schemes</p>
+                        </div>
+                    </div>
+                    <div id="servicesList" class="services-grid"></div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Village Notices Manager -->
+            <section id="tabNotices" class="tab-content">
+                <div class="card create-service-grid" style="margin-bottom: 28px;">
+                    <div class="create-left">
+                        <div class="card-header-flex">
+                            <div>
+                                <h3>Publish Official Village Notice</h3>
+                                <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Broadcast circulars to all village citizens and portal visitors</p>
+                            </div>
+                        </div>
+
+                        <form id="noticeForm" style="box-shadow: none; padding: 0; background: none;">
+                            <div class="form-group-modern">
+                                <label for="noticeTitle">Notice Title</label>
+                                <input type="text" id="noticeTitle" class="search-input" required placeholder="e.g. Gram Sabha Special Session on Rural Road Sanctions">
+                            </div>
+
+                            <div class="form-group-modern">
+                                <label for="noticeCategory">Category</label>
+                                <select id="noticeCategory" class="search-input" style="width: 100%; border-radius: var(--radius-sm);" required>
+                                    <option value="Assembly">🏛️ Gram Sabha Assembly</option>
+                                    <option value="Camp">🏥 Health & Vaccination Camp</option>
+                                    <option value="Agriculture">🌾 Agriculture & Subsidies</option>
+                                    <option value="Sanitation">🧹 Cleanliness & Water Drive</option>
+                                    <option value="General">📢 General Circular</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="noticeIsUrgent" style="width: 18px; height: 18px;">
+                                    <span style="font-weight: 700; color: var(--danger);">🚨 Mark as Urgent Emergency Notice</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <label for="noticeContent">Notice Announcement Details</label>
+                                <textarea id="noticeContent" class="search-input" style="min-height: 100px; width: 100%; border-radius: var(--radius-md);" required placeholder="Write the complete circular details, date, time, and instructions for residents..."></textarea>
+                            </div>
+
+                            <button type="submit" class="auth-submit-btn" style="width: auto; padding: 12px 28px;">
+                                <span>Publish Notice Circular →</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="create-right">
+                        <h4>Notice Board Policy</h4>
+                        <p>Notices published here are instantly broadcasted on the portal's public landing page and the citizen dashboard.</p>
+                        <ul>
+                            <li>✔ Real-Time Public Broadcast</li>
+                            <li>✔ Urgent Red Banner Alert Capability</li>
+                            <li>✔ Official Timestamp & Secretariat Byline</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Published Notices & Circulars</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Active notices currently live on the portal</p>
+                        </div>
+                    </div>
+                    <div id="adminNoticesList" class="notices-grid"></div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Grievances Monitor -->
+            <section id="tabGrievances" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>Village Grievances & Redressal Monitor</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Oversee citizen complaints and review officer resolution compliance</p>
+                        </div>
+                    </div>
+                    <div id="adminGrievanceList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: User Roles -->
+            <section id="tabUsers" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>User Roles & Access Permissions</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Promote verified staff members or manage citizen access</p>
+                        </div>
+                    </div>
+
+                    <div class="search-bar-wrapper">
+                        <input type="text" id="usersSearchInput" class="search-input" placeholder="🔍 Search users by name or email...">
+                    </div>
+
+                    <div class="log-table-wrapper">
+                        <table class="log-table">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th>Current Role</th>
+                                    <th>Modify Permissions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                        Loading users list...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 6: System Logs -->
+            <section id="tabLogs" class="tab-content">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h3>System Audit Trail</h3>
+                            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 2px;">Cryptographically ordered chronological activity logs</p>
+                        </div>
+                    </div>
+
+                    <div class="search-bar-wrapper">
+                        <input type="text" id="logsSearchInput" class="search-input" placeholder="🔍 Search logs by user ID or action performed...">
+                        <button id="exportLogsBtn" class="export-btn">📊 Export Logs to CSV</button>
+                    </div>
+
+                    <div class="log-table-wrapper">
+                        <table class="log-table">
+                            <thead>
+                                <tr>
+                                    <th>Log Ref</th>
+                                    <th>User ID</th>
+                                    <th>Action Performed</th>
+                                    <th>Date & Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                        Loading audit logs...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
         </div>
 
-    </div>
+    </main>
 </div>
 
 <script type="module" src="../js/admin.js"></script>

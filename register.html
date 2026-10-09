@@ -1,60 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register - Digital E Gram Panchayat</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Create Citizen Account | Digital E-Gram Panchayat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
 <body>
 
-    <div class="header">
-        <h1>Digital E Gram Panchayat</h1>
-        <p>Government Service Portal</p>
-    </div>
+<!-- Tricolor Bar -->
+<div class="gov-tricolor-bar"></div>
 
-    <div class="login-container">
-        <div class="login-card">
-            <h2>Create New Account</h2>
+<div class="auth-page-container">
+    <div class="auth-split-card">
+        <!-- Left Brand Presentation Side -->
+        <div class="auth-brand-side">
+            <div class="auth-brand-logo">
+                <div class="logo-crest">🏛️</div>
+                <div>
+                    <h3 style="color:white; font-size:18px;">E-Gram Panchayat</h3>
+                    <span style="font-size:11px; color:#cbd5e1;">Rural e-Governance Initiative</span>
+                </div>
+            </div>
+
+            <div class="auth-brand-content">
+                <h2>Join Over 250,000+ Villages Online</h2>
+                <p>Register as a citizen to apply for government certificates, access farmer subsidies, and track your applications 24/7.</p>
+
+                <ul class="auth-brand-perks">
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Free citizen registration with instant access</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Download officially attested e-Certificates</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Direct status alerts & officer review feedback</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Zero physical queues, 100% paperless workflows</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="auth-brand-footer">
+                <a href="index.html">← Back to Portal Home</a>
+                <span>Helpline: 1800-180-1555</span>
+            </div>
+        </div>
+
+        <!-- Right Form Panel Side -->
+        <div class="auth-form-side">
+            <div class="auth-top-toolbar">
+                <button id="langToggleBtn" class="lang-toggle-btn" title="Switch Language">🌐 EN | हिंदी</button>
+                <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">🌙</button>
+            </div>
+
+            <div class="auth-form-header">
+                <h3>Create an Account</h3>
+                <p>Fill in your details to get started with Panchayat services</p>
+            </div>
 
             <form id="registerForm">
-
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="name" placeholder="Enter your full name" required>
+                <div class="form-group-modern">
+                    <label for="name">Full Name</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="name" placeholder="e.g. Ramesh Kumar" required autocomplete="name">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                <div class="form-group-modern">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="email" placeholder="name@example.com" required autocomplete="email">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="form-group-modern">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" placeholder="Create a strong password" required autocomplete="new-password">
+                        <button type="button" class="password-toggle-btn" id="togglePasswordBtn" title="Show/Hide Password">👁️</button>
+                    </div>
+                    <!-- Password Strength Meter -->
+                    <div class="password-strength-bar">
+                        <div class="password-strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="password-strength-label">
+                        <span id="strengthText">Password Strength</span>
+                        <span>Min. 6 characters</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Select Role</label>
-                    <select id="role">
-                        <option value="user">User</option>
+                <div class="form-group-modern">
+                    <label>Account Role</label>
+                    <!-- Interactive Visual Role Cards -->
+                    <div class="role-picker-grid">
+                        <div class="role-card-option active" data-role="user">
+                            <span class="role-card-icon">👤</span>
+                            <span class="role-card-title">Citizen</span>
+                            <span class="role-card-desc">Apply & Track</span>
+                        </div>
+                        <div class="role-card-option" data-role="staff">
+                            <span class="role-card-icon">🧑‍💼</span>
+                            <span class="role-card-title">Staff</span>
+                            <span class="role-card-desc">Verify & Approve</span>
+                        </div>
+                        <div class="role-card-option" data-role="admin">
+                            <span class="role-card-icon">🛡️</span>
+                            <span class="role-card-title">Admin</span>
+                            <span class="role-card-desc">Manage System</span>
+                        </div>
+                    </div>
+                    <!-- Hidden Select Element synced with role cards for 100% backwards compatibility with js/auth.js -->
+                    <select id="role" style="display: none;">
+                        <option value="user" selected>User</option>
                         <option value="staff">Staff</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>
 
-                <button type="submit" class="primary-btn">Register</button>
+                <button type="submit" class="auth-submit-btn">
+                    <span>Create Account & Continue</span>
+                    <span>→</span>
+                </button>
             </form>
 
-            <p class="register-text">
-                Already have an account?
-                <a href="login.html">Login Here</a>
+            <p class="auth-switch-text">
+                Already registered? 
+                <a href="login.html">Sign In Here</a>
             </p>
-
         </div>
     </div>
+</div>
 
 <script type="module" src="js/auth.js"></script>
+<script type="module">
+    import { initThemeToggle } from "./js/theme.js";
+    import { initLanguage } from "./js/i18n.js";
+    initThemeToggle("themeToggleBtn");
+    initLanguage("langToggleBtn");
+
+    // Password visibility toggle
+    const toggleBtn = document.getElementById("togglePasswordBtn");
+    const passwordInput = document.getElementById("password");
+    if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleBtn.innerText = isPassword ? "🙈" : "👁️";
+        });
+    }
+
+    // Password Strength Meter
+    const strengthFill = document.getElementById("strengthFill");
+    const strengthText = document.getElementById("strengthText");
+    if (passwordInput && strengthFill && strengthText) {
+        passwordInput.addEventListener("input", (e) => {
+            const val = e.target.value;
+            if (!val) {
+                strengthFill.className = "password-strength-fill";
+                strengthText.innerText = "Password Strength";
+                return;
+            }
+
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 8) score++;
+            if (/[0-9]/.test(val) && /[a-zA-Z]/.test(val)) score++;
+            if (/[^a-zA-Z0-9]/.test(val)) score++;
+
+            if (score <= 1) {
+                strengthFill.className = "password-strength-fill strength-weak";
+                strengthText.innerText = "Weak Password";
+            } else if (score <= 3) {
+                strengthFill.className = "password-strength-fill strength-medium";
+                strengthText.innerText = "Moderate Password";
+            } else {
+                strengthFill.className = "password-strength-fill strength-strong";
+                strengthText.innerText = "Strong Password";
+            }
+        });
+    }
+
+    // Interactive Role Card Selector syncing with #role select
+    const roleOptions = document.querySelectorAll(".role-card-option");
+    const roleSelect = document.getElementById("role");
+    roleOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            roleOptions.forEach(o => o.classList.remove("active"));
+            option.classList.add("active");
+            const selectedRole = option.getAttribute("data-role");
+            if (roleSelect) {
+                roleSelect.value = selectedRole;
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
